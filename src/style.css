@@ -205,6 +205,9 @@ body {
 .output-command {
   color: var(--command-color);
   font-weight: 600;
+  background: rgba(0, 255, 65, 0.1);
+  padding: 2px 6px;
+  border-radius: 3px;
 }
 
 .output-project-name {

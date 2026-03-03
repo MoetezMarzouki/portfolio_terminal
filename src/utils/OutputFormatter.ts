@@ -166,7 +166,7 @@ export class OutputFormatter {
     ];
 
     commands.forEach((cmd) => {
-      output.push(`  <span class="output-command">${cmd.name.padEnd(15)}</span> ${cmd.description}`);
+      output.push(`  <span class="output-command">${cmd.usage.padEnd(30)}</span> ${cmd.description}`);
     });
 
     output.push('');

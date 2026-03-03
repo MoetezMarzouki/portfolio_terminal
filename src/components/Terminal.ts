@@ -184,6 +184,40 @@ export class Terminal {
               break;
             }
           }
+        } else {
+          // Normal commands (help, errors, etc.)
+          for (const line of result.output) {
+            const lineElement = document.createElement('div');
+            lineElement.className = `output-line output-${result.success ? 'output' : 'error'}`;
+            this.outputContainer.appendChild(lineElement);
+
+            this.outputHistory.push({
+              type: result.success ? 'output' : 'error',
+              content: line,
+              timestamp: Date.now(),
+            });
+
+            await this.typewriterEffect(lineElement, line, 15);
+            this.scrollToBottom();
+
+            // If skip was triggered, break out of loop
+            if (this.skipTyping) {
+              // Complete all remaining lines instantly
+              for (let i = result.output.indexOf(line) + 1; i < result.output.length; i++) {
+                const remainingLine = document.createElement('div');
+                remainingLine.className = `output-line output-${result.success ? 'output' : 'error'}`;
+                remainingLine.innerHTML = result.output[i];
+                this.outputContainer.appendChild(remainingLine);
+
+                this.outputHistory.push({
+                  type: result.success ? 'output' : 'error',
+                  content: result.output[i],
+                  timestamp: Date.now(),
+                });
+              }
+              break;
+            }
+          }
         }
       } else {
         // Empty command, just show prompt (instant)
