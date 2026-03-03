@@ -29,6 +29,22 @@ body {
   line-height: 1.6;
   overflow: hidden;
   position: relative;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Allow text selection in output */
+#terminal-output {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Allow input in terminal */
+.terminal-input {
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 #app {
@@ -40,6 +56,8 @@ body {
   overflow-y: auto;
   overflow-x: hidden;
   background: transparent;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
 /* Terminal Output */
@@ -137,6 +155,8 @@ body {
   font-weight: 500;
   caret-color: var(--text-color);
   text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
+  /* Prevent zoom on iOS */
+  touch-action: manipulation;
 }
 
 .terminal-input::selection {
@@ -282,6 +302,7 @@ a:hover {
 
   #terminal-output {
     padding: 10px;
+    font-size: 14px;
   }
 
   .input-line {
@@ -289,6 +310,10 @@ a:hover {
   }
 
   .terminal-input {
+    font-size: 14px;
+  }
+
+  .prompt {
     font-size: 14px;
   }
 
@@ -310,6 +335,20 @@ a:hover {
     width: 50px;
     height: 50px;
     opacity: 0.1;
+  }
+
+  /* ASCII art smaller on mobile */
+  .ascii-art {
+    font-size: 0.5em;
+    line-height: 1.2;
+  }
+
+  .welcome-subtitle {
+    font-size: 0.8em;
+  }
+
+  .welcome-tagline {
+    font-size: 0.75em;
   }
 }
 
