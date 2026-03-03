@@ -15,7 +15,7 @@ export function initializeCommands(
       name: 'help',
       description: 'Display all available resources',
       usage: 'kubectl get help',
-      handler: (args) => {
+      handler: () => {
         const commands = initializeCommands(contentStore, formatter);
         return {
           success: true,

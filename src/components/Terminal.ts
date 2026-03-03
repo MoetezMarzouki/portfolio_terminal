@@ -1,6 +1,6 @@
 import type { OutputLine } from '../types';
 import { HistoryManager } from '../utils/HistoryManager';
-import { initializeCommands, executeCommand } from '../commands/commands';
+import { executeCommand } from '../commands/commands';
 import type { Command } from '../types';
 import { Grainient } from './Granient';
 import { ProfileCard } from './ProfileCard';
@@ -18,7 +18,6 @@ export class Terminal {
   private commands: Command[];
   private outputHistory: OutputLine[] = [];
   private skipTyping: boolean = false;
-  private grainient: Grainient | null = null;
   private profileCard: ProfileCard | null = null;
 
   constructor(containerId: string, commands: Command[]) {
@@ -57,7 +56,7 @@ export class Terminal {
     this.addK8sLogo();
 
     // Initialize Grainient background with wave-like movement - attach to body for fullscreen
-    this.grainient = new Grainient(document.body, {
+    new Grainient(document.body, {
       timeSpeed: 0.2,
       grainAmount: 0.12,
       contrast: 1.15,
@@ -261,18 +260,6 @@ export class Terminal {
       e.preventDefault();
       this.inputField.value = '';
     }
-  }
-
-  private addOutput(line: OutputLine): void {
-    this.outputHistory.push(line);
-
-    const lineElement = document.createElement('div');
-    lineElement.className = `output-line output-${line.type}`;
-
-    this.outputContainer.appendChild(lineElement);
-
-    // Typewriter effect
-    this.typewriterEffect(lineElement, line.content);
   }
 
   private typewriterEffect(element: HTMLElement, text: string, speed: number = 20): Promise<void> {

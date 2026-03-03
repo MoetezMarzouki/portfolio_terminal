@@ -4,10 +4,11 @@ import { ContentStore } from './utils/ContentStore';
 import { OutputFormatter } from './utils/OutputFormatter';
 import { initializeCommands } from './commands/commands';
 import contentData from './data/content.json';
+import type { PortfolioContent } from './types';
 
 // Initialize content store
 const contentStore = new ContentStore();
-contentStore.loadContent(contentData);
+contentStore.loadContent(contentData as PortfolioContent);
 
 // Initialize formatter
 const formatter = new OutputFormatter();

@@ -135,7 +135,6 @@ export class Grainient {
   private ro: ResizeObserver | null = null;
   private program: any;
   private colorSets: Array<[string, string, string]>;
-  private currentSetIndex: number = 0;
   private nextSetIndex: number = 1;
   private transitionDuration: number = 7990; // ~8 seconds per palette (10ms faster)
   private fadeDuration: number = 4000; // 4 seconds fade
