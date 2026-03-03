@@ -1,0 +1,181 @@
+{
+  "about": {
+    "name": "Moetez Marzouki",
+    "title": "Cloud & Platform Engineer · Backend / Infrastructure",
+    "summary": "Platform engineer and cloud-native specialist with hands-on experience designing and shipping production-grade distributed systems from scratch. Architected and built a full Kubernetes-native Internal Developer Platform — 4 Go microservices with GraphQL APIs, Istio service mesh, Keycloak OAuth2/OIDC, custom CRDs & operator-pattern controllers, Helm umbrella charts, and a React 19 admin dashboard — zero boilerplate, zero generators.",
+    "location": "Bizerte, Tunisia",
+    "phone": "+216 27 038 750"
+  },
+  "projects": [
+    {
+      "name": "KYMA-FLOW — Kubernetes-Native Internal Developer Platform",
+      "description": "Designed and built entirely from scratch an enterprise-grade IDP running on Kubernetes. The platform lets engineering teams self-service LDAP identity management, spin up browser-based VS Code workspaces on demand, and manage Git repositories — all behind a single Keycloak SSO login.",
+      "technologies": ["Go", "React 19", "TypeScript", "GraphQL", "Kubernetes", "Helm", "Istio", "Keycloak", "OpenLDAP", "Gitea", "Prometheus", "Docker", "PostgreSQL", "Memcached", "Traefik"],
+      "links": [
+        { "type": "github", "url": "https://github.com/MoetezMarzouki" }
+      ],
+      "period": "Aug 2024 – Present",
+      "highlights": [
+        "4 Go microservices with 50+ files and 100+ Helm templates",
+        "LDAP Manager with connection pooling and 15+ GraphQL queries",
+        "Gitea Service with 25+ queries and 30+ mutations",
+        "Custom CRDs and operator-pattern reconciliation",
+        "Istio mTLS STRICT with JWT validation",
+        "100+ Prometheus metrics for observability"
+      ]
+    },
+    {
+      "name": "DBaaS Platform — Database-as-a-Service",
+      "description": "Full Kubernetes-native self-service database provisioning platform. Developers request database instances via a React UI; the platform handles Kubernetes deployment, LDAP-based authentication, ArgoCD GitOps delivery, and Traefik ingress routing end-to-end.",
+      "technologies": ["Go", "gRPC", "GraphQL", "REST", "React", "Kubernetes", "K3s", "ArgoCD", "Jenkins", "Traefik", "OpenLDAP", "Docker", "Helm"],
+      "links": [],
+      "period": "Aug 2025 – Nov 2026",
+      "highlights": [
+        "Go microservices with gRPC inter-service communication",
+        "LDAP authentication for multi-tenant management",
+        "ArgoCD + Jenkins CI/CD with GitOps workflows",
+        "K3s cluster with Traefik automation"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "category": "Languages",
+      "skills": [
+        { "name": "Go", "proficiency": "expert" },
+        { "name": "Rust", "proficiency": "advanced" },
+        { "name": "TypeScript", "proficiency": "expert" },
+        { "name": "Python", "proficiency": "advanced" },
+        { "name": "Bash / PowerShell", "proficiency": "advanced" }
+      ]
+    },
+    {
+      "category": "Backend",
+      "skills": [
+        { "name": "Go microservices", "proficiency": "expert" },
+        { "name": "gRPC", "proficiency": "expert" },
+        { "name": "GraphQL", "proficiency": "expert" },
+        { "name": "REST", "proficiency": "expert" },
+        { "name": ".NET middleware", "proficiency": "advanced" }
+      ]
+    },
+    {
+      "category": "Frontend",
+      "skills": [
+        { "name": "React 19", "proficiency": "expert" },
+        { "name": "TypeScript strict", "proficiency": "expert" },
+        { "name": "Vite", "proficiency": "advanced" },
+        { "name": "Tailwind CSS", "proficiency": "advanced" },
+        { "name": "Jotai", "proficiency": "intermediate" }
+      ]
+    },
+    {
+      "category": "Kubernetes",
+      "skills": [
+        { "name": "K8s / K3s", "proficiency": "expert" },
+        { "name": "Helm 3", "proficiency": "expert" },
+        { "name": "Istio", "proficiency": "expert" },
+        { "name": "Traefik", "proficiency": "advanced" },
+        { "name": "CRDs", "proficiency": "expert" },
+        { "name": "Operators", "proficiency": "expert" },
+        { "name": "RBAC", "proficiency": "advanced" }
+      ]
+    },
+    {
+      "category": "DevOps / CI-CD",
+      "skills": [
+        { "name": "Docker", "proficiency": "expert" },
+        { "name": "ArgoCD", "proficiency": "advanced" },
+        { "name": "Jenkins", "proficiency": "advanced" },
+        { "name": "GitOps", "proficiency": "advanced" },
+        { "name": "Gitea", "proficiency": "advanced" }
+      ]
+    },
+    {
+      "category": "Cloud",
+      "skills": [
+        { "name": "AWS", "proficiency": "advanced" },
+        { "name": "Azure", "proficiency": "intermediate" },
+        { "name": "OpenStack", "proficiency": "intermediate" },
+        { "name": "Knative", "proficiency": "intermediate" }
+      ]
+    },
+    {
+      "category": "Observability",
+      "skills": [
+        { "name": "Prometheus", "proficiency": "advanced" },
+        { "name": "Structured logging", "proficiency": "advanced" },
+        { "name": "Health probes", "proficiency": "advanced" }
+      ]
+    },
+    {
+      "category": "Auth / Identity",
+      "skills": [
+        { "name": "Keycloak OAuth2/OIDC", "proficiency": "expert" },
+        { "name": "OpenLDAP", "proficiency": "expert" },
+        { "name": "JWT", "proficiency": "expert" }
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "ODDO BHF",
+      "role": ".NET Middleware Benchmarking & Optimisation",
+      "startDate": "Aug 2024",
+      "endDate": "Oct 2024",
+      "responsibilities": [
+        "Benchmarked and profiled a production .NET middleware job-management service",
+        "Replaced synchronous inter-service calls with a gRPC + protobuf layer",
+        "Implemented Rust-based performance-critical modules to offload hot-path computation"
+      ]
+    },
+    {
+      "company": "ARABSOFT",
+      "role": "Backend Developer Intern",
+      "startDate": "May 2023",
+      "endDate": "Jul 2023",
+      "responsibilities": [
+        "Designed and delivered an HR management application with Django and Node.js backend",
+        "Delivered working product within a 3-month internship cycle with full REST API coverage"
+      ]
+    },
+    {
+      "company": "AGIL Tunis",
+      "role": "ERP Developer Intern",
+      "startDate": "Jun 2019",
+      "endDate": "May 2021",
+      "responsibilities": [
+        "Built and deployed an ODOO community ERP integrated with an Angular frontend",
+        "Deployed on CentOS 7 with a DAS storage architecture",
+        "Covered HR, procurement, and inventory modules"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "ESPRIT University, Tunis",
+      "degree": "Cloud Engineering Degree",
+      "startDate": "Sep 2022",
+      "endDate": "Jul 2025",
+      "status": "Ongoing",
+      "specialization": "Cloud Computing, Kubernetes, OpenStack, DevOps/MLOps"
+    },
+    {
+      "institution": "ESEN Manouba",
+      "degree": "Bachelor of Computer Science",
+      "startDate": "Sep 2018",
+      "endDate": "Aug 2021",
+      "status": "Completed",
+      "specialization": "Information Systems, Management Fundamentals, ERP"
+    }
+  ],
+  "contact": {
+    "email": "marzouki.taz@gmail.com",
+    "phone": "+216 27 038 750",
+    "location": "Bizerte, Tunisia",
+    "socialLinks": [
+      { "platform": "GitHub", "url": "https://github.com/MoetezMarzouki", "username": "MoetezMarzouki" },
+      { "platform": "Portfolio", "url": "https://newpres.vercel.app", "username": "newpres.vercel.app" }
+    ]
+  }
+}

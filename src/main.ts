@@ -1,0 +1,22 @@
+import './style.css';
+import { Terminal } from './components/Terminal';
+import { ContentStore } from './utils/ContentStore';
+import { OutputFormatter } from './utils/OutputFormatter';
+import { initializeCommands } from './commands/commands';
+import contentData from './data/content.json';
+
+// Initialize content store
+const contentStore = new ContentStore();
+contentStore.loadContent(contentData);
+
+// Initialize formatter
+const formatter = new OutputFormatter();
+
+// Initialize commands
+const commands = initializeCommands(contentStore, formatter);
+
+// Initialize terminal
+const terminal = new Terminal('app', commands);
+
+// Make terminal globally accessible for debugging
+(window as any).terminal = terminal;
