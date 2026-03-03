@@ -288,7 +288,6 @@ export class Grainient {
       // Check if it's time to start next transition
       if (timeSinceTransition > this.transitionDuration) {
         // Move to next palette
-        this.currentSetIndex = this.nextSetIndex;
         this.nextSetIndex = (this.nextSetIndex + 1) % this.colorSets.length;
         
         // Set current colors to target
