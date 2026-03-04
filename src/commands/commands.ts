@@ -138,38 +138,61 @@ export function initializeCommands(
       usage: 'kubectl get commits',
       handler: async () => {
         try {
-          const response = await fetch('https://api.github.com/users/MoetezMarzouki/events/public?per_page=10');
-          if (!response.ok) throw new Error('Failed to fetch commits');
-          
-          const events = await response.json();
-          const pushEvents = events.filter((e: any) => e.type === 'PushEvent').slice(0, 4);
-          
+          // Fetch recent commits from multiple repos
+          const repos = ['portfolio_terminal', 'KYMA-FLOW', 'DBaaS-Platform'];
           const output = [
             '',
             '<span class="output-header">🔥 Recent Commits</span>',
             '',
           ];
 
-          if (pushEvents.length === 0) {
-            output.push('No recent commits found.');
-          } else {
-            pushEvents.forEach((event: any) => {
-              const repo = event.repo.name;
-              const commits = event.payload.commits || [];
-              
-              commits.slice(0, 1).forEach((commit: any) => {
-                const message = commit.message.split('\n')[0];
-                const shortMessage = message.length > 60 ? message.substring(0, 60) + '...' : message;
-                const timeAgo = getTimeAgo(new Date(event.created_at));
+          let hasCommits = false;
+
+          for (const repo of repos) {
+            try {
+              const response = await fetch(`https://api.github.com/repos/MoetezMarzouki/${repo}/commits?per_page=2`);
+              if (response.ok) {
+                const commits = await response.json();
                 
-                output.push(`<span class="output-label">${repo}:</span> ${shortMessage}`);
-                output.push(`  <span style="color: #888">└─ ${timeAgo}</span>`);
-                output.push('');
-              });
-            });
+                if (commits && commits.length > 0) {
+                  hasCommits = true;
+                  
+                  for (const commit of commits) {
+                    const message = commit.commit.message.split('\n')[0];
+                    const shortMessage = message.length > 60 ? message.substring(0, 60) + '...' : message;
+                    const date = new Date(commit.commit.author.date);
+                    const timeAgo = getTimeAgo(date);
+                    const author = commit.commit.author.name.split(' ')[0]; // First name only
+                    
+                    // Fetch commit details for stats
+                    const detailResponse = await fetch(commit.url);
+                    let statsLine = '';
+                    if (detailResponse.ok) {
+                      const details = await detailResponse.json();
+                      const additions = details.stats?.additions || 0;
+                      const deletions = details.stats?.deletions || 0;
+                      
+                      statsLine = ` <span style="color: #00ff41">+${additions}</span> / <span style="color: #ff5555">-${deletions}</span>`;
+                    }
+                    
+                    output.push(`<span class="output-label">${author}:</span> ${shortMessage}${statsLine}`);
+                    output.push(`  <span style="color: #888">└─ ${timeAgo}</span>`);
+                    output.push('');
+                  }
+                }
+              }
+            } catch (err) {
+              // Skip repos that don't exist or are private
+              continue;
+            }
           }
 
-          output.push(`<span class="output-label">View all:</span> <a href="https://github.com/MoetezMarzouki" target="_blank" rel="noopener noreferrer">github.com/MoetezMarzouki</a>`);
+          if (!hasCommits) {
+            output.push('No recent public commits found.');
+            output.push('');
+          }
+
+          output.push(`<span class="output-label">View on GitHub:</span> <a href="https://github.com/MoetezMarzouki" target="_blank" rel="noopener noreferrer">github.com/MoetezMarzouki</a>`);
           output.push('');
 
           return {
@@ -187,6 +210,88 @@ export function initializeCommands(
             ],
           };
         }
+      },
+    },
+    {
+      name: 'meeting',
+      description: 'Schedule a meeting via Cal.com',
+      usage: 'kubectl get meeting',
+      handler: () => {
+        return {
+          success: true,
+          output: [
+            '',
+            '<span class="output-header">📅 Schedule a Meeting</span>',
+            '',
+            'Book a time to discuss your project, collaboration opportunities,',
+            'or just to connect!',
+            '',
+            `🔗 <a href="https://cal.com/moetez-marzouki-taz" target="_blank" rel="noopener noreferrer">cal.com/moetez-marzouki-taz</a>`,
+            '',
+            '<span class="output-label">Available for:</span>',
+            '  • Project consultations',
+            '  • Technical discussions',
+            '  • Collaboration opportunities',
+            '  • General networking',
+            '',
+          ],
+        };
+      },
+    },
+    {
+      name: 'references',
+      description: 'Display professional references',
+      usage: 'kubectl get references',
+      handler: () => {
+        return {
+          success: true,
+          output: [
+            '',
+            '<span class="output-header">👥 Professional References</span>',
+            '',
+            '<span class="output-project-name">Mohamed Amine Ben Ameur</span>',
+            '<span class="output-label">Role:</span> Confirmed Fullstack Developer',
+            '<span class="output-label">Company:</span> Taland Tunis',
+            '<span class="output-label">Email:</span> mohamedaminbnamer@gmail.com',
+            '',
+            '<span class="output-project-name">Hamza Jouini</span>',
+            '<span class="output-label">Role:</span> Senior Fullstack Developer',
+            '<span class="output-label">Company:</span> Docapost',
+            '<span class="output-label">Email:</span> hamzajouini52@gmail.com',
+            '',
+            '<span class="output-project-name">Mohamed Amine Bejaoui</span>',
+            '<span class="output-label">Role:</span> Tech Lead',
+            '<span class="output-label">Company:</span> Intuitive Tunisie',
+            '<span class="output-label">Email:</span> medaminebejaoui.personal@gmail.com',
+            '',
+          ],
+        };
+      },
+    },
+    {
+      name: 'resume',
+      description: 'Download resume/CV',
+      usage: 'kubectl get resume',
+      handler: () => {
+        // Trigger download
+        const link = document.createElement('a');
+        link.href = '/Moetez_Marzouki_CV (2).pdf';
+        link.download = 'Moetez_Marzouki_CV.pdf';
+        link.click();
+        
+        return {
+          success: true,
+          output: [
+            '',
+            '<span class="output-header">📄 Resume Download</span>',
+            '',
+            '✅ Download started!',
+            '',
+            'If the download didn\'t start automatically:',
+            `<a href="/Moetez_Marzouki_CV (2).pdf" download="Moetez_Marzouki_CV.pdf">Click here to download</a>`,
+            '',
+          ],
+        };
       },
     },
   ];

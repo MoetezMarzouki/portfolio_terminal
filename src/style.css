@@ -266,6 +266,8 @@ a {
   text-decoration: underline;
   transition: all 0.3s ease;
   text-shadow: 0 0 5px rgba(0, 217, 255, 0.3);
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 a:hover {
