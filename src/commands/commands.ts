@@ -106,6 +106,36 @@ export function initializeCommands(
         };
       },
     },
+    {
+      name: 'stats',
+      description: 'Display GitHub stats and metrics',
+      usage: 'kubectl get stats',
+      handler: () => {
+        const startYear = 2022; // Your career start year
+        const currentYear = new Date().getFullYear();
+        const yearsOfExperience = currentYear - startYear;
+        
+        return {
+          success: true,
+          output: [
+            '',
+            '<span class="output-header">📊 Stats & Metrics</span>',
+            '',
+            `💼 Years of Experience: ${yearsOfExperience}+ years`,
+            `🎯 Specialization: Cloud & Platform Engineering`,
+            `☸️  Primary Stack: Kubernetes, Go, TypeScript`,
+            '',
+            '<span class="output-label">GitHub Activity:</span>',
+            `📦 Major Projects: KYMA-FLOW IDP, DBaaS Platform`,
+            `🔧 Technologies: 15+ tools & frameworks`,
+            `🚀 Focus: Production-grade distributed systems`,
+            '',
+            `<span class="output-label">Profile:</span> <a href="https://github.com/MoetezMarzouki" target="_blank" rel="noopener noreferrer">github.com/MoetezMarzouki</a>`,
+            '',
+          ],
+        };
+      },
+    },
   ];
 }
 

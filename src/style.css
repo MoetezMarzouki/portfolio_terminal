@@ -382,6 +382,41 @@ a:hover {
   animation: none;
 }
 
+/* Loading animation */
+@keyframes loading {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.loading-indicator {
+  display: inline-block;
+  color: var(--text-color);
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+.loading-indicator::after {
+  content: '⠋';
+  animation: spinner 1s steps(10) infinite;
+}
+
+@keyframes spinner {
+  0% { content: '⠋'; }
+  10% { content: '⠙'; }
+  20% { content: '⠹'; }
+  30% { content: '⠸'; }
+  40% { content: '⠼'; }
+  50% { content: '⠴'; }
+  60% { content: '⠦'; }
+  70% { content: '⠧'; }
+  80% { content: '⠇'; }
+  90% { content: '⠏'; }
+  100% { content: '⠋'; }
+}
+
 /* Loading animation for content */
 @keyframes shimmer {
   0% {

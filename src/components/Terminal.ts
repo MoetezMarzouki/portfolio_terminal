@@ -3,7 +3,6 @@ import { HistoryManager } from '../utils/HistoryManager';
 import { executeCommand } from '../commands/commands';
 import type { Command } from '../types';
 import { Grainient } from './Granient';
-import { ProfileCard } from './ProfileCard';
 
 /**
  * Terminal component - main terminal UI
@@ -18,7 +17,7 @@ export class Terminal {
   private commands: Command[];
   private outputHistory: OutputLine[] = [];
   private skipTyping: boolean = false;
-  private profileCard: ProfileCard | null = null;
+  private profileCard: any = null; // Lazy loaded
 
   constructor(containerId: string, commands: Command[]) {
     const container = document.getElementById(containerId);
@@ -122,6 +121,19 @@ export class Terminal {
       this.inputField.disabled = true;
       this.skipTyping = false; // Reset skip flag
 
+      // Show loading indicator
+      const loadingLine = document.createElement('div');
+      loadingLine.className = 'output-line loading-indicator';
+      loadingLine.textContent = 'Loading ';
+      this.outputContainer.appendChild(loadingLine);
+      this.scrollToBottom();
+
+      // Small delay to show loading animation
+      await new Promise(resolve => setTimeout(resolve, 300));
+
+      // Remove loading indicator
+      loadingLine.remove();
+
       if (input) {
         // Add to history
         this.historyManager.add(input);
@@ -147,7 +159,7 @@ export class Terminal {
           this.hideProfileCard();
         } else if (result.output[0] === '__SHOW_PROFILE_CARD__') {
           // Show profile card and remove the marker from output
-          this.showProfileCard();
+          await this.showProfileCard();
           result.output.shift(); // Remove the marker
           
           // Add output with typewriter effect
@@ -241,6 +253,9 @@ export class Terminal {
 
       // Scroll to bottom
       this.scrollToBottom();
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      this.handleTabCompletion();
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       const prev = this.historyManager.getPrevious();
@@ -259,6 +274,46 @@ export class Terminal {
     } else if (e.key === 'c' && e.ctrlKey) {
       e.preventDefault();
       this.inputField.value = '';
+    }
+  }
+
+  private handleTabCompletion(): void {
+    const input = this.inputField.value;
+    const parts = input.split(' ');
+
+    // Autocomplete "kubectl get" commands
+    if (parts.length === 1 && 'kubectl'.startsWith(parts[0])) {
+      this.inputField.value = 'kubectl';
+    } else if (parts.length === 2 && parts[0] === 'kubectl' && 'get'.startsWith(parts[1])) {
+      this.inputField.value = 'kubectl get';
+    } else if (parts.length === 3 && parts[0] === 'kubectl' && parts[1] === 'get') {
+      // Autocomplete resource names
+      const partial = parts[2];
+      const resources = this.commands.map(cmd => cmd.name);
+      const matches = resources.filter(r => r.startsWith(partial));
+      
+      if (matches.length === 1) {
+        this.inputField.value = `kubectl get ${matches[0]}`;
+      } else if (matches.length > 1) {
+        // Show available options
+        const optionsLine = document.createElement('div');
+        optionsLine.className = 'output-line output-output';
+        optionsLine.style.color = '#00d9ff';
+        optionsLine.textContent = matches.join('  ');
+        this.outputContainer.appendChild(optionsLine);
+        this.scrollToBottom();
+      }
+    } else if (parts.length === 1 && parts[0] === 'clear') {
+      // Already complete
+      return;
+    } else if (parts.length === 1) {
+      // Try to autocomplete direct command names
+      const resources = this.commands.map(cmd => cmd.name);
+      const matches = resources.filter(r => r.startsWith(parts[0]));
+      
+      if (matches.length === 1) {
+        this.inputField.value = matches[0];
+      }
     }
   }
 
@@ -364,10 +419,13 @@ export class Terminal {
     this.inputField.focus();
   }
 
-  private showProfileCard(): void {
+  private async showProfileCard(): Promise<void> {
     if (this.profileCard) {
       return; // Already showing
     }
+
+    // Lazy load ProfileCard component
+    const { ProfileCard } = await import('./ProfileCard');
 
     this.profileCard = new ProfileCard({
       avatarUrl: '/me_with_sarroura.jpg',
