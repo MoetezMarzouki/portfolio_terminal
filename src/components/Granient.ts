@@ -145,12 +145,13 @@ export class Grainient {
   constructor(container: HTMLElement, options: GrainientOptions = {}) {
     this.container = container;
 
-    // Define color palette sets (black -> grey -> darker accent colors)
+    // Define color palette sets (black -> dark grey -> muted cool colors)
+    // No yellow/green tones, reduced brightness
     this.colorSets = [
-      ['#000000', '#4a4a4a', '#008fb3'], // darker cyan
-      ['#000000', '#4a4a4a', '#b34780'], // darker pink
-      ['#000000', '#4a4a4a', '#cc7a00'], // darker orange
-      ['#000000', '#4a4a4a', '#cccc00'], // darker yellow
+      ['#000000', '#2a2a2a', '#004d66'], // deep teal
+      ['#000000', '#2a2a2a', '#66004d'], // deep magenta
+      ['#000000', '#2a2a2a', '#4d0066'], // deep purple
+      ['#000000', '#2a2a2a', '#001a4d'], // deep navy blue
     ];
 
     // Initialize current and target colors
