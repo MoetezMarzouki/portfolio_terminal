@@ -111,17 +111,13 @@ export function initializeCommands(
       description: 'Display GitHub stats and metrics',
       usage: 'kubectl get stats',
       handler: () => {
-        const startYear = 2022; // Your career start year
-        const currentYear = new Date().getFullYear();
-        const yearsOfExperience = currentYear - startYear;
-        
         return {
           success: true,
           output: [
             '',
             '<span class="output-header">📊 Stats & Metrics</span>',
             '',
-            `💼 Years of Experience: ${yearsOfExperience}+ years`,
+            `💼 Experience: 3+ years (Freelance)`,
             `🎯 Specialization: Cloud & Platform Engineering`,
             `☸️  Primary Stack: Kubernetes, Go, TypeScript`,
             '',
