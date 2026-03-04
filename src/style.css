@@ -762,6 +762,7 @@ a:hover {
   cursor: pointer;
   transition: all 0.2s ease;
   backdrop-filter: blur(10px);
+  pointer-events: auto;
 }
 
 .pc-contact-btn:hover {

@@ -117,6 +117,16 @@ export class ProfileCard {
   }
 
   private setupEventListeners(): void {
+    // Contact button click handler
+    const contactBtn = this.wrapperEl.querySelector('.pc-contact-btn') as HTMLButtonElement;
+    if (contactBtn) {
+      contactBtn.style.pointerEvents = 'auto';
+      contactBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.open('https://linkedin.com/in/moetez-marzouki-499a46202', '_blank');
+      });
+    }
+
     if (!this.options.enableTilt) return;
 
     this.cardEl.addEventListener('pointerenter', this.handlePointerEnter.bind(this));
