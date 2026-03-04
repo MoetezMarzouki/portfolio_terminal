@@ -132,17 +132,86 @@ export function initializeCommands(
         };
       },
     },
+    {
+      name: 'commits',
+      description: 'Display recent GitHub commits',
+      usage: 'kubectl get commits',
+      handler: async () => {
+        try {
+          const response = await fetch('https://api.github.com/users/MoetezMarzouki/events/public?per_page=10');
+          if (!response.ok) throw new Error('Failed to fetch commits');
+          
+          const events = await response.json();
+          const pushEvents = events.filter((e: any) => e.type === 'PushEvent').slice(0, 4);
+          
+          const output = [
+            '',
+            '<span class="output-header">🔥 Recent Commits</span>',
+            '',
+          ];
+
+          if (pushEvents.length === 0) {
+            output.push('No recent commits found.');
+          } else {
+            pushEvents.forEach((event: any) => {
+              const repo = event.repo.name;
+              const commits = event.payload.commits || [];
+              
+              commits.slice(0, 1).forEach((commit: any) => {
+                const message = commit.message.split('\n')[0];
+                const shortMessage = message.length > 60 ? message.substring(0, 60) + '...' : message;
+                const timeAgo = getTimeAgo(new Date(event.created_at));
+                
+                output.push(`<span class="output-label">${repo}:</span> ${shortMessage}`);
+                output.push(`  <span style="color: #888">└─ ${timeAgo}</span>`);
+                output.push('');
+              });
+            });
+          }
+
+          output.push(`<span class="output-label">View all:</span> <a href="https://github.com/MoetezMarzouki" target="_blank" rel="noopener noreferrer">github.com/MoetezMarzouki</a>`);
+          output.push('');
+
+          return {
+            success: true,
+            output,
+          };
+        } catch (error) {
+          return {
+            success: false,
+            output: [
+              '',
+              '<span class="output-error">Failed to fetch recent commits</span>',
+              'Please check your internet connection or try again later.',
+              '',
+            ],
+          };
+        }
+      },
+    },
   ];
+}
+
+// Helper function to calculate time ago
+function getTimeAgo(date: Date): string {
+  const now = new Date();
+  const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+  
+  if (seconds < 60) return 'just now';
+  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+  if (seconds < 604800) return `${Math.floor(seconds / 86400)}d ago`;
+  return `${Math.floor(seconds / 604800)}w ago`;
 }
 
 /**
  * Execute a command by name
  */
-export function executeCommand(
+export async function executeCommand(
   commandName: string,
   args: string[],
   commands: Command[]
-): { success: boolean; output: string[]; error?: string } {
+): Promise<{ success: boolean; output: string[]; error?: string }> {
   // Parse kubectl-style commands: "kubectl get <resource>"
   const parts = commandName.toLowerCase().split(' ');
   
@@ -164,7 +233,7 @@ export function executeCommand(
     }
     
     try {
-      return command.handler(args);
+      return await command.handler(args);
     } catch (error) {
       return {
         success: false,
@@ -195,7 +264,7 @@ export function executeCommand(
   }
 
   try {
-    return command.handler(args);
+    return await command.handler(args);
   } catch (error) {
     return {
       success: false,

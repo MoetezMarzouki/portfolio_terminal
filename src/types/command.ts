@@ -11,7 +11,7 @@ export interface CommandResult {
   error?: string;
 }
 
-export type CommandHandler = (args: string[]) => CommandResult;
+export type CommandHandler = (args: string[]) => CommandResult | Promise<CommandResult>;
 
 export interface Command {
   name: string;

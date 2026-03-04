@@ -151,7 +151,7 @@ export class Terminal {
         });
 
         // Execute command
-        const result = executeCommand(input, [], this.commands);
+        const result = await executeCommand(input, [], this.commands);
 
         // Check for clear command
         if (result.output[0] === '__CLEAR__') {
